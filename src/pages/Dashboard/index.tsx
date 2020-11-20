@@ -42,9 +42,9 @@ const Dashboard: React.FC = () => {
       } = response.data;
 
       Object.keys(transactionsInput).forEach(params => {
-        transactionsInput[params].formattedValue = formatValue(
-          transactionsInput[params].value,
-        );
+        transactionsInput[params].formattedValue =
+          (transactionsInput[params].type === 'outcome' ? '- ' : '') +
+          formatValue(transactionsInput[params].value);
         transactionsInput[params].formattedDate = formatDate(
           new Date(transactionsInput[params].created_at),
         );
@@ -102,8 +102,7 @@ const Dashboard: React.FC = () => {
                 <tr key={transaction.id}>
                   <td className="title">{transaction.title}</td>
                   <td className={transaction.type}>
-                    {(transaction.type === 'outcome' ? '-' : '') +
-                      transaction.formattedValue}
+                    {transaction.formattedValue}
                   </td>
                   <td>{transaction.category.title}</td>
                   <td>{transaction.formattedDate}</td>
